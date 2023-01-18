@@ -1,11 +1,13 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./index.html'],
+  content: ["./index.html"],
   theme: {
     extend: {
       width:{
         '375':'375px',
+        '400':'400px',
         '135':'135px',
+        '265':'265px'
       },
       fontFamily:{
         'SpaceGrotesk':'Space Grotesk'
@@ -21,8 +23,10 @@ module.exports = {
       },
       backgroundImage:{
         'bgmovile':"url(../images/bg-main-mobile.png)",
+        'bgDesktop':"url(../images/bg-main-desktop.png)",
         'cardBlack':"url(../images/bg-card-back.png)",
         'cardFront':"url(../images/bg-card-front.png)",
+        'cardLogo':"url(../images/card-logo.svg)"
       }
 
 

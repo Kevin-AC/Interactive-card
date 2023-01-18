@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&display=swap');
 @tailwind base;
 @tailwind components;
+    .size{
+        @apply bg-contain bg-no-repeat w-265 h-44  lg:w-400 lg:h-52
+    }
 @tailwind utilities;
