@@ -50,14 +50,15 @@ nameUser.addEventListener('input',()=>{
 number.addEventListener("input",e=>{
     inputValue=e.target.value
     cardNumber.innerText=number.value
-    let regExp=/[A-z]/g;//buscamos letras de la A a la z 
+    let regExp=/[a-zA-Z-ñ]|[^a-zA-Z\d\s]/g;//buscamos letras de la A a la z 
     if(regExp.test(number.value)){
         verError(number,errorNumber,'Wrong format,numbers only')
     }else{
         number.value=inputValue.replace(/\s/g, '').replace(/([0-9]{4})/g,'$1 ').trim();//--/g busca de manera global .trim()borra el ultimo espacio
         //.replace(/\s/g, '')--busca con\s los espacios los cambia por string vacio
         //.replace(/([0-9]{4})/g,'$1 ')--busca numero {4} los agrupa de a 4 '$1 ' da el espacio entre cada grupo
-        ocultarError(number,errorNumber,``)     
+        ocultarError(number,errorNumber,``)    
+         
     }
     if(number.value==''){
         vacio(cardNumber,'0000 0000 0000 0000')
@@ -68,7 +69,11 @@ month.addEventListener('input',()=>{
     let monthValue
     month.value=month.value.replace(/[^\dA-Z]/g, '')
     monthValue=month.value
-    cardMonth.innerText=monthValue
+    
+    if(monthValue>0&&monthValue<=12){
+        cardMonth.innerText=monthValue
+    }
+
     if(monthValue==''){
         verError(month,montError,"Can't be blank")
         vacio(cardMonth,'00')
