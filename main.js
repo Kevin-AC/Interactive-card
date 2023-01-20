@@ -21,61 +21,115 @@ const cvError=document.getElementById('cvError');
 const tanks=document.getElementById('Thanks');
 const form=document.getElementById('form');
 
-let letter = /[a-zA-Z]/;
-let flag = false;
+// number.addEventListener('input',()=>{
+//     let inputValue
+//     number.value= number.value.replace(/[^\dA-Z]/g, '').replace(/(.{4})/g, "$1 ").trim();
+//     inputValue=number.value
+//     if(inputValue.match(letter)){
+//         number.classList.add('inputError')
+//         errorNumber.innerText=`Wrong format,numbers only`
+//     }else{
+//         number.classList.remove('inputError')
+//         errorNumber.innerText=` `
+//     }
+//     cardNumber.innerText=`${inputValue}`
+// })
+
+
 nameUser.addEventListener('input',()=>{
-    cardName.innerText=`${nameUser.value}`
-})
-
-number.addEventListener('input',()=>{
-    let inputValue = number.value;
-    inputValue= inputValue.replace(/(.{4})/g, "$1 ");
-    if(inputValue.match(letter)){
-        number.classList.add('inputError')
-        errorNumber.innerText=`Wrong format,numbers only`
-    }else{
-        number.classList.remove('inputError')
-        errorNumber.innerText=` `
+    cardName.innerText=nameUser.value
+    if(!nameUser.value==''){
+        nameUser.classList.add('borde')
     }
-    cardNumber.innerText=`${inputValue}`
+    if(nameUser.value==''){
+        vacio(cardName,'Jane Appleseed')
+        nameUser.classList.remove('borde')
+    }
 })
 
-
+number.addEventListener("input",e=>{
+    inputValue=e.target.value
+    cardNumber.innerText=number.value
+    let regExp=/[A-z]/g;//buscamos letras de la A a la z 
+    if(regExp.test(number.value)){
+        verError(number,errorNumber,'Wrong format,numbers only')
+    }else{
+        number.value=inputValue.replace(/\s/g, '').replace(/([0-9]{4})/g,'$1 ').trim();//--/g busca de manera global .trim()borra el ultimo espacio
+        //.replace(/\s/g, '')--busca con\s los espacios los cambia por string vacio
+        //.replace(/([0-9]{4})/g,'$1 ')--busca numero {4} los agrupa de a 4 '$1 ' da el espacio entre cada grupo
+        ocultarError(number,errorNumber,``)     
+    }
+    if(number.value==''){
+        vacio(cardNumber,'0000 0000 0000 0000')
+    }
+})
 
 month.addEventListener('input',()=>{
-    let monthValue=month.value
+    let monthValue
+    month.value=month.value.replace(/[^\dA-Z]/g, '')
+    monthValue=month.value
     cardMonth.innerText=monthValue
     if(monthValue==''){
-        month.classList.add('inputError')
-        montError.classList.add('errorTxt')
-        montError.innerText=`Can't be blank`
+        verError(month,montError,"Can't be blank")
+        vacio(cardMonth,'00')
     }else{
-        month.classList.remove('inputError')
-        montError.innerText=``
+        ocultarError(month,montError,``)
     }
-    
+   
+   
 })
 year.addEventListener('input',()=>{
-    cardYear.innerText=year.value
+    let yearValue
+    year.value=year.value.replace(/[^\dA-Z]/g, '')
+    yearValue=year.value
+    cardYear.innerText=yearValue
+    if(yearValue==''){
+        verError(year)
+        vacio(cardYear,'00')
+    }else{
+        ocultarError(year)
+    }
 
 })
 cvc.addEventListener('input',()=>{
-    let cvValue=cvc.value
+    let cvValue
+    cvc.value=cvc.value.replace(/[^\dA-Z]/g, '')
+    cvValue=cvc.value
     cardCv.innerText=cvValue
     if(cvValue==''){
-        cvc.classList.add('inputError')
-        cvError.classList.add('errorTxt')
-        cvError.innerText=`Can't be blank`
+        verError(cvc,cvError,"Can't be blank")
+        vacio(cardCv,'000')
     }else{
-        cvc.classList.remove('inputError')
-        cvError.innerText=` `
+        ocultarError(cvc,cvError,``)
     }
     
 })
 
+btnConf.addEventListener('click',()=>{
+    if(month.value==''||year.value==''||cvc.value==''){
+        verError(month,montError,"Can't be blank")
+        verError(cvc,cvError,"Can't be blank")
+        verError(year)
+    }else{
+        form.classList.add('hide')
+        tanks.classList.remove('hide')
+    }
+
+})
 
 
 
-function error(){
-   
+function verError(inputError,errorP,msgError){
+    inputError.classList.add('inputError')
+    errorP.classList.add('errorTxt')
+    errorP.innerText=msgError
+}
+
+function ocultarError(inputError,errorP,msgError){
+    inputError.classList.remove('inputError')
+    errorP.classList.remove('errorTxt')
+    errorP.innerText=msgError
+}
+function vacio(string,msgString){
+    string.innerText=msgString
 }
