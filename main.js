@@ -14,6 +14,7 @@ const cvc=document.getElementById('cvc');
 const btnConf=document.getElementById('btnConfirm');
 const btnConti=document.getElementById('btnContinue');
 
+const errorName=document.getElementById('errorName')
 const errorNumber=document.getElementById('errorNumber');
 const montError=document.getElementById('monthError');
 const cvError=document.getElementById('cvError');
@@ -21,30 +22,12 @@ const cvError=document.getElementById('cvError');
 const tanks=document.getElementById('Thanks');
 const form=document.getElementById('form');
 
-// number.addEventListener('input',()=>{
-//     let inputValue
-//     number.value= number.value.replace(/[^\dA-Z]/g, '').replace(/(.{4})/g, "$1 ").trim();
-//     inputValue=number.value
-//     if(inputValue.match(letter)){
-//         number.classList.add('inputError')
-//         errorNumber.innerText=`Wrong format,numbers only`
-//     }else{
-//         number.classList.remove('inputError')
-//         errorNumber.innerText=` `
-//     }
-//     cardNumber.innerText=`${inputValue}`
-// })
 
 
 nameUser.addEventListener('input',()=>{
     cardName.innerText=nameUser.value
-    if(!nameUser.value==''){
-        nameUser.classList.add('borde')
-    }
-    if(nameUser.value==''){
-        vacio(cardName,'Jane Appleseed')
-        nameUser.classList.remove('borde')
-    }
+    verificarVacio(nameUser,errorName,"Can't be blank",cardName,'Jane Appleseed')
+   
 })
 
 number.addEventListener("input",e=>{
@@ -67,30 +50,17 @@ number.addEventListener("input",e=>{
 
 month.addEventListener('input',()=>{
     let monthValue
-    month.value=month.value.replace(/[^\dA-Z]/g, '')
+    month.value=month.value.replace(/[^\dA-Z]/g,'')
     monthValue=month.value
     cardMonth.innerText=monthValue
-    if(monthValue==''){
-        verError(month,montError,"Can't be blank")
-        vacio(cardMonth,'00')
-    }else{
-        ocultarError(month,montError,``)
-    }
-   
-   
+    verificarVacio(month,montError,"Can't be blank",cardMonth,'00')
 })
 year.addEventListener('input',()=>{
     let yearValue
     year.value=year.value.replace(/[^\dA-Z]/g, '')
     yearValue=year.value
     cardYear.innerText=yearValue
-    if(yearValue==''){
-        vacio(cardYear,'00')
-        verError(year)
-        
-    }else{
-        ocultarError(year)
-    }
+    verificarVacio(year,montError,"Can't be blank",cardYear,'00')
 
 })
 cvc.addEventListener('input',()=>{
@@ -98,34 +68,22 @@ cvc.addEventListener('input',()=>{
     cvc.value=cvc.value.replace(/[^\dA-Z]/g, '')
     cvValue=cvc.value
     cardCv.innerText=cvValue
-    if(cvValue==''){
-        verError(cvc,cvError,"Can't be blank")
-        vacio(cardCv,'000')
-    }else{
-        ocultarError(cvc,cvError,``)
-    }
+    verificarVacio(cvc,cvError,"Can't be blank",cardCv,'000')
     
 })
 
 btnConf.addEventListener('click',()=>{
-    //verificarVacio(number,errorNumber,"f")
 
-    if(nameUser.value==''){
-        verError(nameUser)
-    }else if(number.value==''){
-        verError(number,errorNumber,"Can't be blank")
-    }else if(month.value==''){
-        verError(month,montError,"Can't be blank")
-    }else if(year.value==''){
-        verError(year)
-    }else if(cvc.value==''){
-        verError(cvc,cvError,"Can't be blank")
-    }else{
+    verificarVacio(nameUser,errorName,"Can't be blank",cardName,'Jane Appleseed')
+    verificarVacio(number,errorNumber,"Can't be blank",cardNumber,'0000 0000 0000 0000')
+    verificarVacio(month,montError,"Can't be blank",cardMonth,'00')
+    verificarVacio(cvc,cvError,"Can't be blank",cardCv,'000')
+    verificarVacio(year,montError,"Can't be blank",cardYear,'00')
+    if (nameUser.value === "" || number.value=== "" || month.value === ""|| year.value === ""|| cvc.value === "") {       
+    } else {
         form.classList.add('hide')
         tanks.classList.remove('hide')
     }
-    
-
 })
 
 
@@ -141,15 +99,17 @@ function ocultarError(inputError,errorP,msgError){
     errorP.classList.remove('errorTxt')
     errorP.innerText=msgError
 }
-function vacio(string,msgString){
-    string.innerText=msgString
+function vacio(card,cardMsg){
+   card.innerText=cardMsg
 }
 
-// function verificarVacio(inputError){
-//     if(inputError.value.length>0){
-//         verError(inputError,errorP,'',false)
-//     }else{
-//         verError(inputError,errorP,"d")
-    
-//     }
-// }
+function verificarVacio(inputError,errorP,msgError,card,cardMsg){    
+    if(inputError.value==''){
+        verError(inputError,errorP,msgError)
+        vacio(card,cardMsg)
+        inputError.classList.remove('borde')
+    }else{
+        ocultarError(inputError,errorP,``)
+        inputError.classList.add('borde')
+    }
+}
