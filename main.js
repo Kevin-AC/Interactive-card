@@ -69,11 +69,7 @@ month.addEventListener('input',()=>{
     let monthValue
     month.value=month.value.replace(/[^\dA-Z]/g, '')
     monthValue=month.value
-    
-    if(monthValue>0&&monthValue<=12){
-        cardMonth.innerText=monthValue
-    }
-
+    cardMonth.innerText=monthValue
     if(monthValue==''){
         verError(month,montError,"Can't be blank")
         vacio(cardMonth,'00')
@@ -89,8 +85,9 @@ year.addEventListener('input',()=>{
     yearValue=year.value
     cardYear.innerText=yearValue
     if(yearValue==''){
-        verError(year)
         vacio(cardYear,'00')
+        verError(year)
+        
     }else{
         ocultarError(year)
     }
@@ -111,14 +108,23 @@ cvc.addEventListener('input',()=>{
 })
 
 btnConf.addEventListener('click',()=>{
-    if(month.value==''||year.value==''||cvc.value==''){
+    //verificarVacio(number,errorNumber,"f")
+
+    if(nameUser.value==''){
+        verError(nameUser)
+    }else if(number.value==''){
+        verError(number,errorNumber,"Can't be blank")
+    }else if(month.value==''){
         verError(month,montError,"Can't be blank")
-        verError(cvc,cvError,"Can't be blank")
+    }else if(year.value==''){
         verError(year)
+    }else if(cvc.value==''){
+        verError(cvc,cvError,"Can't be blank")
     }else{
         form.classList.add('hide')
         tanks.classList.remove('hide')
     }
+    
 
 })
 
@@ -138,3 +144,12 @@ function ocultarError(inputError,errorP,msgError){
 function vacio(string,msgString){
     string.innerText=msgString
 }
+
+// function verificarVacio(inputError){
+//     if(inputError.value.length>0){
+//         verError(inputError,errorP,'',false)
+//     }else{
+//         verError(inputError,errorP,"d")
+    
+//     }
+// }
